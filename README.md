@@ -78,6 +78,7 @@ The formula:
 output = alpha * input + (1 - alpha) * prevOutput;
 ```
 This is a weighted average of the current input and the previous output. Let's break it down:
--alpha * input: This term gives weight to the new input. If alpha is large (close to 1), the new input will have a stronger influence on the output. If alpha is small (close to 0), the new input will have a smaller influence.
--(1 - alpha) * prevOutput: This term gives weight to the previous output. The larger the value of 1 - alpha, the more influence the previous output has on the new output, making the change more gradual.
--Combined Result: By combining these two terms, the output changes gradually from the old value (prevOutput) to the new value (input). Each time the filter function is called, the new output will be stored in prevOutput (implicitly, as it replaces the current output). This creates a smooth transition between successive inputs.
+
+- alpha * input: This term gives weight to the new input. If alpha is large (close to 1), the new input will have a stronger influence on the output. If alpha is small (close to 0), the new input will have a smaller influence.
+- (1 - alpha) * prevOutput: This term gives weight to the previous output. The larger the value of 1 - alpha, the more influence the previous output has on the new output, making the change more gradual.
+- Combined Result: By combining these two terms, the output changes gradually from the old value (prevOutput) to the new value (input). Each time the filter function is called, the new output will be stored in prevOutput (implicitly, as it replaces the current output). This creates a smooth transition between successive inputs.
