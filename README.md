@@ -25,23 +25,24 @@ input: The current measured value (feedback from the system).
 2. Update the integral term:
    ```
    integral += error;
-   
+   ```
 Accumulates the error over time. This term helps eliminate steady-state error by increasing the controller output if the error persists over time.
 
 3. Compute the derivative:
 ```
 double derivative = error - prevError;
-
+```
 This calculates the rate of change of the error (how fast the error is changing). It helps to dampen the system by anticipating future changes based on the current rate of error change.
 
 4. Update prevError:
 ```
 prevError = error;
-
+```
 This prepares the prevError for the next time the function is called, so the derivative term can be calculated properly in future steps.
 
 5. Return the PID control output:
 
 ```
 return kp * error + ki * integral + kd * derivative;
+```
 The output is a weighted sum of the proportional, integral, and derivative terms. This output can then be used to drive an actuator or modify the system's behavior.
