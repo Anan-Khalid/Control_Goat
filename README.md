@@ -82,3 +82,40 @@ This is a weighted average of the current input and the previous output. Let's b
 - alpha * input: This term gives weight to the new input. If alpha is large (close to 1), the new input will have a stronger influence on the output. If alpha is small (close to 0), the new input will have a smaller influence.
 - (1 - alpha) * prevOutput: This term gives weight to the previous output. The larger the value of 1 - alpha, the more influence the previous output has on the new output, making the change more gradual.
 - Combined Result: By combining these two terms, the output changes gradually from the old value (prevOutput) to the new value (input). Each time the filter function is called, the new output will be stored in prevOutput (implicitly, as it replaces the current output). This creates a smooth transition between successive inputs.
+
+### Loop Function
+The loop function runs repeatedly, controlling the motor speed using both the PID controller and SoftStart filter.
+1. Set the desired speed (setpoint):
+```
+double setpoint = 100; // desired speed
+```
+This defines the target speed you want the motor to reach. In this case, it's set to 100 units (depending on the scaling factor of the speed sensor)
+
+2. Read the current motor speed (input):
+```
+double input = analogRead(A0); // current speed
+```
+This reads the current speed of the motor from an analog sensor connected to pin A0. This could be any feedback mechanism, like an encoder or a tachometer, that provides an analog voltage proportional to the motor's speed. The value ranges from 0 to 1023 in a typical 10-bit ADC setup (0V to 5V).
+
+3.Compute the control signal (output) using the PID controller:
+```
+double output = pid.compute(setpoint, input);
+```
+Here, the PID controller calculates the control signal based on the difference between the desired speed (setpoint) and the actual speed (input). The control signal adjusts the motor's power (via PWM) to bring the speed closer to the target.
+
+Apply the soft start filter:
+```
+output = softStart.filter(output);
+```
+
+4.Control the motor speed using PWM:
+```
+analogWrite(motorPin, output);
+```
+This sends the filtered PWM signal to the motor pin. The analogWrite() function generates a PWM signal with a duty cycle based on the output value (typically between 0 and 255). This PWM signal controls the motor's speed indirectly by adjusting the average voltage applied to the motor.
+
+Delay:
+```
+delay(50);
+```
+It prevents the system from updating too quickly, which could cause instability or excessive oscillations.
