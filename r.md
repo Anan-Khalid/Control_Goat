@@ -43,11 +43,13 @@ source devel/setup.bash
 ```
 
 Now, we can start the service by
-
+```
 roslaunch kinect2_bridge kinect2_bridge.launch
+```
 
 Now we can check if it is working by
 
+```
 # normal
 rosrun kinect2_viewer kinect2_viewer
 
